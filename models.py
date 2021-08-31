@@ -4,6 +4,8 @@ import os
 import json
 
 DB_PATH = os.environ['DATABASE_URL']
+if DB_PATH.startswith('"postgres://'):
+    DB_PATH = DB_PATH.replace("postgres://", "postgresql://", 1)
 
 db = SQLAlchemy()
 
