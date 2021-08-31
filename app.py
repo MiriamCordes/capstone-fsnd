@@ -16,7 +16,7 @@ def create_app(test_config=None):
 APP = create_app()
 
 
-@APP.route('/')
+@APP.route('/test')
 def index():
     return "Server is running!"
 
