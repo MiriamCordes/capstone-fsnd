@@ -81,13 +81,13 @@ def create_movie():
     abort(422)
 
   movie_title = body.get('title', None)
-  movie_release_date = body.get('releaseDate', None)
+  movie_release_date = body.get('release_date', None)
 
   if movie_title is None or movie_release_date is None: 
     abort(422)
 
   try: 
-    movie = Movie(title=movie_title, releaseDate=movie_release_date)
+    movie = Movie(title=movie_title, release_date=movie_release_date)
     movie.insert()
 
     movies = Movie.query.all()
@@ -116,13 +116,13 @@ def update_movie(movie_id):
     abort(422)
 
   movie_title = body.get('title', None)
-  movie_release_date = body.get('releaseDate', None)
+  movie_release_date = body.get('release_date', None)
 
   if movie_title is not None:
     movie.title = movie_title
 
   if movie_release_date is not None:
-    movie.releaseDate = movie_release_date
+    movie.release_date = movie_release_date
 
   try: 
     movie.update()

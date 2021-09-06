@@ -26,17 +26,17 @@ class Movie(db.Model):
 
     id=Column(Integer, primary_key=True)
     title=Column(String, nullable=False)
-    releaseDate=Column(DateTime, nullable=False)
+    release_date=Column(DateTime, nullable=False)
 
-    def __init__(self, title, releaseDate):
+    def __init__(self, title, release_date):
         self.title = title
-        self.releaseDate = releaseDate
+        self.release_date = release_date
 
     def format(self):
         return {
             'id': self.id,
             'title': self.title,
-            'releaseDate': self.releaseDate
+            'release_date': self.release_date
         }
 
     def insert(self):
