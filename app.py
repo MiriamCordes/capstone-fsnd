@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from models import Movie, Actor, setup_db
 from auth import AuthError, requires_auth
+import datetime
 
 def create_app(test_config=None):
   # create and configure the app
@@ -72,16 +73,19 @@ def delete_movie(payload, movie_id):
     abort(422)
 
 
-@APP.route('/movies', methods=["POST"])
+@APP.route('/movies', methods=['POST'])
 @requires_auth('create:movie')
 def create_movie(payload):
   body = request.get_json()
+  print(body)
 
   if body is None:
     abort(422)
 
   movie_title = body.get('title', None)
   movie_release_date = body.get('release_date', None)
+
+  movie_release_date = datetime.datetime.strptime(movie_release_date, "%m/%d/%Y")
 
   if movie_title is None or movie_release_date is None: 
     abort(422)
@@ -91,7 +95,7 @@ def create_movie(payload):
     movie.insert()
 
     movies = Movie.query.all()
-    formatted_movies = [movie.format for movie in movies]
+    formatted_movies = [movie.format() for movie in movies]
 
     return jsonify({
       "movies": formatted_movies,
@@ -118,6 +122,8 @@ def update_movie(payload, movie_id):
   movie_title = body.get('title', None)
   movie_release_date = body.get('release_date', None)
 
+  movie_release_date = datetime.datetime.strptime(movie_release_date, "%m/%d/%Y")
+
   if movie_title is not None:
     movie.title = movie_title
 
@@ -128,7 +134,7 @@ def update_movie(payload, movie_id):
     movie.update()
 
     movies = Movie.query.all()
-    formatted_movies = [movie.format for movie in movies]
+    formatted_movies = [movie.format() for movie in movies]
 
     return jsonify({
       'movies': formatted_movies,
@@ -147,7 +153,7 @@ def get_actors(payload):
   try:
     actors = Actor.query.all()
 
-    if actor is None: 
+    if actors is None: 
       abort(422)
 
     formatted_actors = [actor.format() for actor in actors]
