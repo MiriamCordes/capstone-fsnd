@@ -7,11 +7,13 @@ DB_PATH = os.environ['DATABASE_URL']
 
 db = SQLAlchemy()
 
+
 def db_drop_and_create_all():
     db.drop_all()
     db.create_all()
 
 # db_drop_and_create_all()
+
 
 def setup_db(app, database_path=DB_PATH):
     app.config["SQLALCHEMY_DATABASE_URI"] = DB_PATH
@@ -21,12 +23,14 @@ def setup_db(app, database_path=DB_PATH):
     db.init_app(app)
     db.create_all()
 
+
+# Model for movie
 class Movie(db.Model):
     __tablename__ = 'movie'
 
-    id=Column(Integer, primary_key=True)
-    title=Column(String, nullable=False)
-    release_date=Column(Date, nullable=False)
+    id = Column(Integer, primary_key=True)
+    title = Column(String, nullable=False)
+    release_date = Column(Date, nullable=False)
 
     def __init__(self, title, release_date):
         self.title = title
@@ -50,13 +54,15 @@ class Movie(db.Model):
     def update(self):
         db.session.commit()
 
+
+# Model for Actor
 class Actor(db.Model):
     __tablename__ = "actor"
 
-    id=Column(Integer, primary_key=True)
-    name=Column(String, nullable=False)
-    age=Column(Integer, nullable=False)
-    gender=Column(String, nullable=False)
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    age = Column(Integer, nullable=False)
+    gender = Column(String, nullable=False)
 
     def __init__(self, name, age, gender):
         self.name = name
@@ -81,6 +87,5 @@ class Actor(db.Model):
 
     def update(self):
         db.session.commit()
-
 
 

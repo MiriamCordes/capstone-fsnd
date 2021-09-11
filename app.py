@@ -6,8 +6,8 @@ from models import Movie, Actor, setup_db
 from auth import AuthError, requires_auth
 import datetime
 
+
 def create_app(test_config=None):
-  # create and configure the app
   app = Flask(__name__)
   setup_db(app)
   CORS(app)
@@ -17,6 +17,8 @@ def create_app(test_config=None):
 
 APP = create_app()
 
+
+# CORS setup
 @APP.after_request
 def after_request(response):
     response.headers.add(
@@ -29,11 +31,14 @@ def after_request(response):
     )
     return response
 
-# Routing for movies
 
-@APP.route('/movies', methods=["GET"])
+# Routes for movies
+@APP.route('/movies', methods=['GET'])
 @requires_auth('get:movies')
 def get_movies(payload):
+  if not request.method == 'GET':
+      abort(405)
+
   try:
     movies = Movie.query.all()
 
@@ -52,7 +57,7 @@ def get_movies(payload):
     abort(422)
 
 
-@APP.route('/movies/<int:movie_id>', methods=["DELETE"])
+@APP.route('/movies/<int:movie_id>', methods=['DELETE'])
 @requires_auth('delete:movie')
 def delete_movie(payload, movie_id):
   movie = Movie.query.get(movie_id)
@@ -76,6 +81,9 @@ def delete_movie(payload, movie_id):
 @APP.route('/movies', methods=['POST'])
 @requires_auth('create:movie')
 def create_movie(payload):
+  if not request.method == 'POST':
+      abort(405)
+
   body = request.get_json()
   print(body)
 
@@ -85,7 +93,8 @@ def create_movie(payload):
   movie_title = body.get('title', None)
   movie_release_date = body.get('release_date', None)
 
-  movie_release_date = datetime.datetime.strptime(movie_release_date, "%m/%d/%Y")
+  movie_release_date = 
+      datetime.datetime.strptime(movie_release_date, "%m/%d/%Y")
 
   if movie_title is None or movie_release_date is None: 
     abort(422)
@@ -106,7 +115,8 @@ def create_movie(payload):
     print(e)
     abort(422)
 
-@APP.route('/movies/<int:movie_id>', methods=["PATCH"])
+
+@APP.route('/movies/<int:movie_id>', methods=['PATCH'])
 @requires_auth('update:movie')
 def update_movie(payload, movie_id):
   movie = Movie.query.get(movie_id)
@@ -122,7 +132,8 @@ def update_movie(payload, movie_id):
   movie_title = body.get('title', None)
   movie_release_date = body.get('release_date', None)
 
-  movie_release_date = datetime.datetime.strptime(movie_release_date, "%m/%d/%Y")
+  movie_release_date = 
+      datetime.datetime.strptime(movie_release_date, "%m/%d/%Y")
 
   if movie_title is not None:
     movie.title = movie_title
@@ -146,10 +157,13 @@ def update_movie(payload, movie_id):
     abort(422)
 
 
-#Routing for actors
-@APP.route('/actors', methods=["GET"])
+# Routes for actors
+@APP.route('/actors', methods=['GET'])
 @requires_auth('get:actors')
 def get_actors(payload):
+  if not request.method == 'GET':
+      abort(405)
+
   try:
     actors = Actor.query.all()
 
@@ -168,7 +182,7 @@ def get_actors(payload):
     abort(422)
 
 
-@APP.route('/actors/<int:actor_id>', methods=["DELETE"])
+@APP.route('/actors/<int:actor_id>', methods=['DELETE'])
 @requires_auth('delete:actor')
 def delete_actor(payload, actor_id):
   actor = Actor.query.get(actor_id)
@@ -189,9 +203,12 @@ def delete_actor(payload, actor_id):
     abort(422)
 
 
-@APP.route('/actors', methods=["POST"])
+@APP.route('/actors', methods=['POST'])
 @requires_auth('create:actor')
 def create_actor(payload):
+  if not request.method == 'POST':
+      abort(405)
+
   body = request.get_json()
 
   if body is None:
@@ -220,7 +237,8 @@ def create_actor(payload):
     print(e)
     abort(422)
 
-@APP.route('/actors/<int:actor_id>', methods=["PATCH"])
+
+@APP.route('/actors/<int:actor_id>', methods=['PATCH'])
 @requires_auth('update:actor')
 def update_actor(payload, actor_id):
   actor = Actor.query.get(actor_id)
@@ -266,8 +284,17 @@ def update_actor(payload, actor_id):
 def index():
     return "Server is running!"
 
-      
+
 # Error Handling
+@APP.errorhandler(405)
+def not_allowed(error):
+    return jsonify({
+        "success": False,
+        "error": 405,
+        "message": "method not allowed"
+    }), 405
+
+
 @APP.errorhandler(422)
 def unprocessable(error):
     return jsonify({
