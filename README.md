@@ -16,11 +16,50 @@ and three roles
 - Casting Director with permissions of Casting Assistant plus the permission to add or delete actors from the database and the permission to modify actors and movies
 - Executive Producer with the permissions of Casting Director plus the permission to add or delete movies to the database
 
+The roles are managed in Auth0 and the permissions are added to the access token.
+
 ## Getting Started
 
+### Installing Dependencies
+
+Install necessary dependencies with  
+```bash
+pip install -r requirements.txt
+```
+
+### Setting up the Database
+With Postgres running, run
+```bash
+dropdb capstone
+createdb capstone
+psql capstone < capstone.psql
+```
+
+### Running the local server
+Run the application locally with  
+```bash
+export FLASK_APP=app.py
+export FLASK_ENVIRONMENT=development
+flask run --reload
+```
+Use a virtual environment if you wish to with  
+```bash
+python3 venv venv
+source venv/bin/activate
+```
+
 ## Running the Application
+If you are running the app locally navigate to http://localhost:5000/    
+If you want to use the live app navigate to https://fsdn-capstone-app-310821.herokuapp.com/  
 
 ## Running the Tests
+To run the tests, run
+```
+dropdb capstone_test
+createdb capstone_test
+psql capstone_test < capstone.psql
+python test_capstone.py
+```
 
 ## API Reference
 
@@ -76,7 +115,7 @@ GET '/actors'
 POST '/movies'
 - add a movie to the list of movies saved on the database
 - sample request https://fsdn-capstone-app-310821.herokuapp.com/movies
-with body
+with body  
 ```
 {
     "title": "Harry Potter and the Philosopher's Stone",
@@ -110,7 +149,7 @@ with body
 POST '/actors'
 - add an actor or actess to the list of movies saved on the database
 - sample request https://fsdn-capstone-app-310821.herokuapp.com/actors
-with body
+with body  
 ```
 {
     "name": "Emma Watson",
@@ -149,7 +188,7 @@ with body
 PATCH 'movies/{id}'
 - update a movie on the server
 - sample request https://fsdn-capstone-app-310821.herokuapp.com/movies/1
-with body
+with body  
 ```
 {
     "title": "Harry Potter and the Philosopher's Stone",
@@ -183,7 +222,7 @@ with body
 PATCH 'actors/{id}'
 - update an actor or actress on the server
 - sample request https://fsdn-capstone-app-310821.herokuapp.com/actors/1
-with body
+with body  
 ```
 {
     "name": "Alan Rickman"
