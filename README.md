@@ -29,6 +29,10 @@ and three roles
 GET '/movies'
 
 - returns the list of movies saved on the server
+- sample request
+```
+https://fsdn-capstone-app-310821.herokuapp.com/movies
+```
 - sample response 
 ```
 {
@@ -50,6 +54,10 @@ GET '/movies'
 
 GET '/actors'
 - returns the list of actors saved on the server
+- sample request
+```
+https://fsdn-capstone-app-310821.herokuapp.com/actors
+```
 - sample response
 ```
 {
@@ -73,7 +81,17 @@ GET '/actors'
 
 POST '/movies'
 - add a movie to the list of movies saved on the database
-- neccessary attributes are title and release date
+- sample request
+```
+https://fsdn-capstone-app-310821.herokuapp.com/movies
+```
+with body
+```
+{
+    "title": "Harry Potter and the Philosopher's Stone",
+    "release_date": "31/07/2001"
+}
+```
 - sample response
 ```
 {
@@ -100,7 +118,18 @@ POST '/movies'
 
 POST '/actors'
 - add an actor or actess to the list of movies saved on the database
-- neccessary attributes are name, age and gender
+- sample request
+```
+https://fsdn-capstone-app-310821.herokuapp.com/actors
+```
+with body
+```
+{
+    "name": "Emma Watson",
+    "age": 31,
+    "gender": "female
+}
+```
 - sample response
 ```
 {
@@ -131,8 +160,17 @@ POST '/actors'
 
 PATCH 'movies/{id}'
 - update a movie on the server
-- neccessary attributes at least one of the attributes of a movie
-- sample response
+- sample request
+```
+https://fsdn-capstone-app-310821.herokuapp.com/movies/1
+```
+with body
+```
+{
+    "title": "Harry Potter and the Philosopher's Stone",
+    "release_date": "31/07/2001"
+}
+```- sample response
 ```
 {
     "movies": [
@@ -158,7 +196,16 @@ PATCH 'movies/{id}'
 
 PATCH 'actors/{id}'
 - update an actor or actress on the server
-- necessary attributes at least on of the attributes of an actor or an actress
+- sample request
+```
+https://fsdn-capstone-app-310821.herokuapp.com/actors/1
+```
+with body
+```
+{
+    "name": "Alan Rickman"
+}
+```
 - sample response
 ```
 {
@@ -189,6 +236,10 @@ PATCH 'actors/{id}'
 
 DELETE 'movies/{id}'
 - delete a movie from the server
+- sample request
+```
+https://fsdn-capstone-app-310821.herokuapp.com/movies/1
+```
 - sample response
 ```
 {
@@ -199,6 +250,10 @@ DELETE 'movies/{id}'
 
 DELETE 'actors/{id}'
 - delete an actor or actress from the server
+- sample request
+```
+https://fsdn-capstone-app-310821.herokuapp.com/actors/1
+```
 - sample response
 ```
 {
@@ -209,11 +264,20 @@ DELETE 'actors/{id}'
 
 ### Error Handling
 
-401
+401 Unauthorized
 
-404
+404 Resource not found
 
-405
+405 Method not allowed
 
-422
+422 Unprocessable
+
+Sample Response for an error
+```
+{
+    "error": 404,
+    "message": "resource not found",
+    "success": false
+}
+```
 
