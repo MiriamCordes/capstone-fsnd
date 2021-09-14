@@ -29,10 +29,7 @@ and three roles
 GET '/movies'
 
 - returns the list of movies saved on the server
-- sample request
-```
-https://fsdn-capstone-app-310821.herokuapp.com/movies
-```
+- sample request https://fsdn-capstone-app-310821.herokuapp.com/movies
 - sample response 
 ```
 {
@@ -54,10 +51,7 @@ https://fsdn-capstone-app-310821.herokuapp.com/movies
 
 GET '/actors'
 - returns the list of actors saved on the server
-- sample request
-```
-https://fsdn-capstone-app-310821.herokuapp.com/actors
-```
+- sample request https://fsdn-capstone-app-310821.herokuapp.com/actors
 - sample response
 ```
 {
@@ -81,10 +75,7 @@ https://fsdn-capstone-app-310821.herokuapp.com/actors
 
 POST '/movies'
 - add a movie to the list of movies saved on the database
-- sample request
-```
-https://fsdn-capstone-app-310821.herokuapp.com/movies
-```
+- sample request https://fsdn-capstone-app-310821.herokuapp.com/movies
 with body
 ```
 {
@@ -118,10 +109,7 @@ with body
 
 POST '/actors'
 - add an actor or actess to the list of movies saved on the database
-- sample request
-```
-https://fsdn-capstone-app-310821.herokuapp.com/actors
-```
+- sample request https://fsdn-capstone-app-310821.herokuapp.com/actors
 with body
 ```
 {
@@ -160,17 +148,15 @@ with body
 
 PATCH 'movies/{id}'
 - update a movie on the server
-- sample request
-```
-https://fsdn-capstone-app-310821.herokuapp.com/movies/1
-```
+- sample request https://fsdn-capstone-app-310821.herokuapp.com/movies/1
 with body
 ```
 {
     "title": "Harry Potter and the Philosopher's Stone",
     "release_date": "31/07/2001"
 }
-```- sample response
+```
+- sample response
 ```
 {
     "movies": [
@@ -196,10 +182,7 @@ with body
 
 PATCH 'actors/{id}'
 - update an actor or actress on the server
-- sample request
-```
-https://fsdn-capstone-app-310821.herokuapp.com/actors/1
-```
+- sample request https://fsdn-capstone-app-310821.herokuapp.com/actors/1
 with body
 ```
 {
@@ -236,10 +219,7 @@ with body
 
 DELETE 'movies/{id}'
 - delete a movie from the server
-- sample request
-```
-https://fsdn-capstone-app-310821.herokuapp.com/movies/1
-```
+- sample request https://fsdn-capstone-app-310821.herokuapp.com/movies/1
 - sample response
 ```
 {
@@ -250,10 +230,7 @@ https://fsdn-capstone-app-310821.herokuapp.com/movies/1
 
 DELETE 'actors/{id}'
 - delete an actor or actress from the server
-- sample request
-```
-https://fsdn-capstone-app-310821.herokuapp.com/actors/1
-```
+- sample request https://fsdn-capstone-app-310821.herokuapp.com/actors/1
 - sample response
 ```
 {
