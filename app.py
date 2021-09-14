@@ -12,7 +12,6 @@ def create_app(test_config=None):
   setup_db(app)
   CORS(app)
 
-
   # CORS setup
   @app.after_request
   def after_request(response):
@@ -25,14 +24,13 @@ def create_app(test_config=None):
         'GET,PUT,POST,DELETE,PATCH'
       )
       return response  
-  
 
   # Routes for movies
   @app.route('/movies', methods=['GET'])
   @requires_auth('get:movies')
   def get_movies(payload):
     if not request.method == 'GET':
-        abort(405)  
+      abort(405)  
 
     try:
       movies = Movie.query.all()  
@@ -50,7 +48,6 @@ def create_app(test_config=None):
     except Exception as e:
       print(e)
       abort(422)  
-  
 
   @app.route('/movies/<int:movie_id>', methods=['DELETE'])
   @requires_auth('delete:movie')
@@ -71,7 +68,6 @@ def create_app(test_config=None):
     except Exception as e:
       print(e)
       abort(422)  
-  
 
   @app.route('/movies', methods=['POST'])
   @requires_auth('create:movie')
@@ -108,7 +104,6 @@ def create_app(test_config=None):
     except Exception as e:
       print(e)
       abort(422)  
-  
 
   @app.route('/movies/<int:movie_id>', methods=['PATCH'])
   @requires_auth('update:movie')
@@ -149,7 +144,6 @@ def create_app(test_config=None):
       print(e)
       abort(422)  
   
-
   # Routes for actors
   @app.route('/actors', methods=['GET'])
   @requires_auth('get:actors')
@@ -173,7 +167,6 @@ def create_app(test_config=None):
     except Exception as e:
       print(e)
       abort(422)  
-  
 
   @app.route('/actors/<int:actor_id>', methods=['DELETE'])
   @requires_auth('delete:actor')
@@ -194,7 +187,6 @@ def create_app(test_config=None):
     except Exception as e:
       print(e)
       abort(422)  
-  
 
   @app.route('/actors', methods=['POST'])
   @requires_auth('create:actor')
@@ -229,7 +221,6 @@ def create_app(test_config=None):
     except Exception as e:
       print(e)
       abort(422)  
-  
 
   @app.route('/actors/<int:actor_id>', methods=['PATCH'])
   @requires_auth('update:actor')
@@ -271,12 +262,10 @@ def create_app(test_config=None):
     except Exception as e:
       print(e)
       abort(422)  
-  
 
   @app.route('/')
   def index():
       return "Server is running!"  
-  
 
   # Error Handling
   @app.errorhandler(405)
@@ -285,8 +274,7 @@ def create_app(test_config=None):
           'success': False,
           'error': 405,
           'message': "method not allowed"
-      }), 405  
-  
+          }), 405  
 
   @app.errorhandler(422)
   def unprocessable(error):
@@ -294,8 +282,7 @@ def create_app(test_config=None):
           'success': False,
           'error': 422,
           'message': "unprocessable"
-      }), 422
-  
+          }), 422
 
   @app.errorhandler(404)
   def not_found(error):
@@ -303,8 +290,7 @@ def create_app(test_config=None):
           'success': False,
           'error': 404,
           'message': "resource not found"
-      }), 404  
-  
+          }), 404  
 
   @app.errorhandler(AuthError)
   def unauthorized(e):
@@ -312,7 +298,7 @@ def create_app(test_config=None):
           'success': False,
           'error': e.status_code,
           'message': e.error
-      }), 401
+          }), 401
 
   return app
 
